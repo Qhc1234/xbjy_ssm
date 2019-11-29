@@ -1,0 +1,81 @@
+<div class="navbar-container ace-save-state" id="navbar-container">
+    <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+        <span class="sr-only">Toggle sidebar</span>
+
+        <span class="icon-bar"></span>
+
+        <span class="icon-bar"></span>
+
+        <span class="icon-bar"></span>
+    </button>
+
+    <div class="navbar-header pull-left">
+        <a href="index.html" class="navbar-brand">
+            <small>
+                <i class="fa fa-leaf"></i>
+                小标交友
+            </small>
+        </a>
+    </div>
+
+    <div class="navbar-buttons navbar-header pull-right" role="navigation">
+        <ul class="nav ace-nav" style="height: 0">>
+
+            <li class="light-blue dropdown-modal">
+                <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                    <img class="nav-user-photo" src="/xbjy/assets/images/avatars/user.jpg" alt="Jason's Photo"/>
+                    <span class="user-info">
+									<small>欢迎你,</small>
+									{{loginUser.username}}
+								</span>
+
+                    <i class="ace-icon fa fa-caret-down"></i>
+                </a>
+
+                <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+
+
+                    <li>
+                        <a :href="'/xbjy/user/toDetail?id='+loginUser.id">
+                            <i class="ace-icon fa fa-user"></i>
+                            个人信息
+                        </a>
+                    </li>
+
+                    <li class="divider"></li>
+
+                    <li>
+                        <a href="/xbjy/user/logout">
+                            <i class="ace-icon fa fa-power-off"></i>
+                            退出
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div><!-- /.navbar-container -->
+<script>
+    var vm = new Vue({
+        el:'#navbar-container',
+        data:{
+            loginUser:{
+                id:'',
+                username:''
+            },
+            path:path
+        },
+        methods:{
+            checkLogin:function(){
+                axios({url:path+"/user/checkLogin"})
+                    .then(response => {
+                        this.loginUser = response.data;
+                        console.log(this.loginUser);
+                    }).catch(function(error){console.log(error)});
+            }
+        },
+        created:function(){
+            this.checkLogin();
+        }
+    });
+</script>

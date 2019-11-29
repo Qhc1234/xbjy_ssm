@@ -1,0 +1,64 @@
+
+.leftTitle {
+
+    float: left;
+    width: 120px;
+    height: 35px;
+    line-height: 35px;
+    font: normal bold 20px ''
+
+}
+
+.btnGroup {
+    margin-top: 20px;
+    padding: 0 200px;
+
+}
+
+.btnGroup > button {
+    float: right;
+    margin-right: 50px;
+}
+
+
+.article{
+    padding:10px 100px;
+    border-bottom: 2px solid #ccc;
+    position: relative;
+}
+
+.articleDetail{
+    padding:10px 100px;
+}
+
+.articleDetail span{
+    display: inline-block;
+    width: 100px;
+}
+.articleDetail p{
+
+    display: inline-block;
+}
+
+.good img{
+    width: 30px;
+    height: 30px;
+    margin:0 10px;
+}
+
+.articleSearch{
+    height: 40px;
+    line-height: 40px;
+    padding:10px 0 10px 100px;
+
+}
+.depts{
+    font:normal bold 20px "";
+}
+.depts span{
+    display: inline-block;
+    width: 100px;
+}
+.depts p{
+    display: inline-block;
+}

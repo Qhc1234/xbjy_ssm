@@ -1,0 +1,334 @@
+
+<!DOCTYPE><html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>Blank Page - Ace Admin</title>
+
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="/xbjy/assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/xbjy/assets/css/style.css"/>
+    <link rel="stylesheet" href="/xbjy/assets/font-awesome/4.5.0/css/font-awesome.min.css"/>
+
+    <!-- page specific plugin styles -->
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="/xbjy/assets/css/fonts.googleapis.com.css"/>
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="/xbjy/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/xbjy/assets/css/ace-part2.min.css" class="ace-main-stylesheet"/>
+    <![endif]-->
+    <link rel="stylesheet" href="/xbjy/assets/css/ace-skins.min.css"/>
+    <link rel="stylesheet" href="/xbjy/assets/css/ace-rtl.min.css"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/xbjy/assets/css/ace-ie.min.css"/>
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+
+    <!-- ace settings handler -->
+    <script src="/xbjy/assets/js/ace-extra.min.js"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="/xbjy/assets/js/html5shiv.min.js"></script>
+    <script src="/xbjy/assets/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<script>
+    //获取主机地址之后的目录，如： uimcardprj/share/meun.html
+    var pathName=window.document.location.pathname;
+    var path=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+    document.write(`<script src="${path}/assets/js/jquery-2.1.4.min.js"><\/script>`);
+    document.write(`<script src="${path}/assets/js/vue.js"><\/script>`);
+    document.write(`<script src="${path}/assets/js/axios.js"><\/script>`);
+    document.write(`<script src="${path}/assets/js/common/vuePublic.js"><\/script>`);
+
+</script>
+<body class="skin-1">
+<div id="navbar" class="navbar navbar-default          ace-save-state">
+
+</div>
+
+<div class="main-container ace-save-state" id="main-container">
+
+
+    <div id="sidebar" class="sidebar responsive ace-save-state">
+
+        <ul class="nav nav-list">
+
+            <li class="active open">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-tag"></i>
+                    <span class="menu-text"> 用户 </span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+
+
+                    <li class="">
+                        <a href="/xbjy/user/toList">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            查看用户
+                        </a>
+                        <a href="/xbjy/user/focus/toList">
+                            <i class="menu-icon fa fa-file-o"></i>
+
+                            <span class="menu-text">
+								我关注的用户
+
+								<span class="badge badge-primary">5</span>
+							</span>
+
+                        </a>
+                        <a href="/xbjy/article/toList">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            发布文章
+                        </a>
+                        <a href="/xbjy/article/favorite/toList">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            我的收藏
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="active open">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-file-o"></i>
+
+                    <span class="menu-text">
+								部门管理
+
+								<span class="badge badge-primary">5</span>
+							</span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+
+
+                    <li class="">
+                        <a href="/xbjy/dept/toList">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            部门设置
+                        </a>
+                        <a href="/xbjy/conference/toList">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            会议系统
+                        </a>
+                    </li>
+
+
+                </ul>
+
+            </li>
+        </ul><!-- /.nav-list -->
+
+        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+            <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state"
+               data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div style="position: absolute;margin:20px;">
+            <a href="/xbjy/article/toAdd" class="btn btn-warning">
+                <i class="glyphicon glyphicon-plus"></i>发布文章
+            </a>
+        </div>
+        <h1 style="text-align: center">文章列表</h1>
+        <hr style="margin: 0">
+
+        <div class="articleSearch">
+
+            <div class="col-sm-3">
+                标题：<input type="text" placeholder="Username" style="height:30px;" v-model="params.title" @keyup="findPage(1,pageInfo.pageSize)">
+            </div>
+            <div class="col-sm-3">
+                作者：
+                <select name="" id="" style="width: 100px;" v-model="params.userId" @change="findPage(1,pageInfo.pageSize)">
+                    <option value="">不限</option>
+                    <option :value="user.user_id" v-for="user in publishUserList">{{user.publish_username}}</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                排序：
+                <select name="" style="width: 100px;" v-model="params.type">
+                    <option value="1">浏览数</option>
+                    <option value="2">收藏数</option>
+                </select>
+                <button type="button" class="btn btn-info" style=" height: 30px;border:0;" @click="typeSortAsc">
+                    <i class="glyphicon glyphicon-arrow-up"></i>
+                </button>
+                <button type="button" class="btn btn-warning" style=" height: 30px;border:0" @click="typeSortDesc">
+                    <i class="glyphicon glyphicon-arrow-down"></i>
+                </button>
+            </div>
+            <div class="col-sm-3">
+                时间：
+                <button type="button" class="btn btn-info" style=" height: 30px;border:0;" @click="timeSortAsc">
+                    <i class="glyphicon glyphicon-arrow-up"></i>
+                </button>
+                <button type="button" class="btn btn-warning" style=" height: 30px;border:0" @click="timeSortDesc">
+                    <i class="glyphicon glyphicon-arrow-down"></i>
+                </button>
+            </div>
+        </div>
+        <hr>
+        <div class="article" v-for="article in pageInfo.list">
+            <h4>
+                <a href="#" title="查看详情" @click="toDetail(article.id)">{{article.title}}</a>
+
+            </h4>
+            <table border="1" cellspacing="2" width="180" style="position: absolute;top:10px;right:100px">
+                <tr>
+                    <td>收藏数</td>
+                    <td>浏览数</td>
+                </tr>
+                <tr>
+                    <td>{{article.favoriteCount}}</td>
+                    <td>{{article.browse_count}}</td>
+                </tr>
+            </table>
+            <div style="position: relative;left:0;">
+                <h5>
+                    <b>作者</b>：{{article.publish_username}}
+                </h5>
+                <h5>
+                    <b>时间</b>：{{article.publish_date|formatDateTime}}
+                </h5>
+            </div>
+
+            <div style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
+                {{article.content}}
+            </div>
+        </div>
+
+        <!--<nav aria-label="Page navigation" style="position: fixed;right: 100px;bottom: 10px;">-->
+        <!--<ul class="pagination">-->
+        <!--<li>-->
+        <!--<a href="#" aria-label="Previous">-->
+        <!--<span aria-hidden="true">&laquo;</span>-->
+        <!--</a>-->
+        <!--</li>-->
+        <!--<li><a href="#">1</a></li>-->
+        <!--<li><a href="#">2</a></li>-->
+        <!--<li><a href="#">3</a></li>-->
+        <!--<li><a href="#">4</a></li>-->
+        <!--<li><a href="#">5</a></li>-->
+        <!--<li>-->
+        <!--<a href="#" aria-label="Next">-->
+        <!--<span aria-hidden="true">&raquo;</span>-->
+        <!--</a>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--</nav>-->
+        <div class="clearfix">
+            <div style="float: left;">
+                <div style="padding-top:5px;">
+                    <span class="badge badge-info">
+                        当前第 {{pageInfo.pageNum}} 页 / {{pageInfo.pages}} 页，共 {{pageInfo.total}} 条数据
+                    </span>
+                </div>
+            </div>
+            <div>
+                <div class="pagination no-margin pull-right clearfix">
+                    <li class="prev "><a href="#" @click="findPage(1,pageInfo.pageSize)">首页</a></li>
+                    <li :class="pageInfo.hasPreviousPage?'prev':'prev disabled'">
+                        <a  v-if="pageInfo.hasPreviousPage" href="#" @click="findPage(pageInfo.prePage,pageInfo.pageSize)">上一页</a>
+                        <a  v-else-if="!pageInfo.hasPreviousPage" href="#" >上一页</a>
+                    </li>
+                    <li v-for="i in pageInfo.navigatepageNums" :class="pageInfo.pageNum==i?'active':''"><a href="#" @click="findPage(i,pageInfo.pageSize)">{{i}}</a></li>
+                    <li :class="pageInfo.hasNextPage?'next':'next disabled'">
+                        <a v-if="pageInfo.hasNextPage" href="#" @click="findPage(pageInfo.nextPage,pageInfo.pageSize)">下一页</a>
+                        <a v-else-if="!pageInfo.hasNextPage" href="#" >下一页</a>
+                    </li>
+                    <li class="next"><a href="#" @click="findPage(pageInfo.pages,pageInfo.pageSize)">尾页</a></li>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div><!-- /.main-content -->
+
+    <div class="footer">
+        <div class="footer-inner">
+            <div class="footer-content">
+						<span class="bigger-120">
+							<span class="blue bolder">Ace</span>
+							Application &copy; 2013-2014
+						</span>
+
+                &nbsp; &nbsp;
+
+            </div>
+        </div>
+    </div>
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+
+
+<script type="text/javascript">
+    try {
+        ace.settings.loadState('main-container')
+    } catch (e) {
+    }
+</script>
+
+<script type="text/javascript">
+    try {
+        ace.settings.loadState('sidebar')
+    } catch (e) {
+    }
+</script>
+
+<!-- basic scripts -->
+
+<!--[if !IE]> -->
+<script src="/xbjy/assets/js/jquery-2.1.4.min.js"></script>
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script src="/xbjy/assets/js/jquery-1.11.3.min.js"></script>
+<![endif]-->
+<script type="text/javascript">
+    if ('ontouchstart' in document.documentElement) document.write("<script src='/xbjy/assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+</script>
+<script src="/xbjy/assets/js/bootstrap.min.js"></script>
+
+<!-- page specific plugin scripts -->
+
+<!-- ace scripts -->
+<script src="/xbjy/assets/js/ace-elements.min.js"></script>
+<script src="/xbjy/assets/js/ace.min.js"></script>
+
+<!-- inline scripts related to this page -->
+<script>
+    document.write(`<script src="${path}/assets/js/article/article_favorite.js"><\/script>`);
+    $(function () {
+        $("#navbar").load(`${path}/common/navbar`);
+    })
+</script>
+</body>
+</html>
